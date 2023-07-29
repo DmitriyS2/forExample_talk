@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Разговор</string>
+    <string name="post1">Привет, заяц! Что делаешь?</string>
+    <string name="post2">Привет, свин! Морковку ем. Заходи!</string>
+    <string name="post3">Привет, звери!</string>
+</resources>
