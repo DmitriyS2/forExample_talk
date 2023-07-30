@@ -3,4 +3,5 @@
     <string name="post1">Hello, Rabbit! What are you doing?</string>
     <string name="post2">Hello, Pig! I\'m eating carrot. Come on!</string>
     <string name="post3">Hello, animals!</string>
+    <string name="avatar">Avatar</string>
 </resources>

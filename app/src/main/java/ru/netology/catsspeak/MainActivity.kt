@@ -1,56 +1,34 @@
 package ru.netology.catsspeak
 
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import ru.netology.catsspeak.adapter.PostsAdapter
 import ru.netology.catsspeak.databinding.ActivityMainBinding
 import ru.netology.catsspeak.viewmodel.PostViewModel
 
-var colorBack: String = "#000000"
-var colorFont: String = "#FFFFFF"
+const val blackColor:String  = "#000000"
+const val whiteColor:String = "#FFFFFF"
+const val colorPig:String = "#FDE801"
+const val colorRabbit:String = "#FD4801"
+const val colorWoman:String =  "#FF444477"
+val avatarPig = R.drawable.pig_savings_24
+val avatarRabbit = R.drawable.rabbit_cruelty_free_24
+val avatarWoman = R.drawable.woman
 
 class MainActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val viewModel by viewModels<PostViewModel>()
-        viewModel.dataPig.observe(this) { postPig ->
-            with(binding) {
-                contentPig.setBackgroundColor(Color.parseColor(colorBack))
-                contentPig.setTextColor(Color.parseColor(colorFont))
-                contentPig.text = postPig.content
-                publishedPig.text = postPig.published
-            }
+        val viewModel: PostViewModel by viewModels()
+        val adapter = PostsAdapter{
+            viewModel.highlight(it.id)
         }
-        viewModel.dataRabbit.observe(this) { postRabbit ->
-            with(binding) {
-                contentRabbit.setBackgroundColor(Color.parseColor(colorBack))
-                contentRabbit.setTextColor(Color.parseColor(colorFont))
-                contentRabbit.text = postRabbit.content
-                publishedRabbit.text = postRabbit.published
-            }
-        }
-        viewModel.dataWoman.observe(this) { postWoman ->
-            with(binding) {
-                contentWoman.setBackgroundColor(Color.parseColor(colorBack))
-                contentWoman.setTextColor(Color.parseColor(colorFont))
-                contentWoman.text = postWoman.content
-                publishedWoman.text = postWoman.published
-            }
-        }
-
-        binding.avatarPig.setOnClickListener {
-            viewModel.highlightPig()
-        }
-        binding.avatarRabbit.setOnClickListener {
-            viewModel.highlightRabbit()
-        }
-        binding.avatarWoman.setOnClickListener {
-            viewModel.highlightWoman()
+        binding.list.adapter = adapter
+        viewModel.data.observe(this) { posts ->
+            adapter.submitList(posts)
         }
     }
 }

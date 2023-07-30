@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing"
+    tools:context=".MainActivity">
+
+    <ImageButton
+        android:id="@+id/avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/avatar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/pig_savings_24" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/avatar"
+        app:layout_constraintTop_toTopOf="@id/avatar"
+        tools:text="Name" />
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/avatar"
+        app:layout_constraintTop_toBottomOf="@id/name"
+        tools:text="Привет!" />
+
+    <TextView
+        android:id="@+id/published"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/content"
+        tools:text="Дата" />
+
+
+    <!--    <ImageButton-->
+    <!--        android:id="@+id/avatarRabbit"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="@dimen/spacing"-->
+    <!--        android:src="@drawable/rabbit_cruelty_free_24"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/avatarPig"-->
+    <!--        android:contentDescription="TODO" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/contentRabbit"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        tools:text = "Привет!"-->
+    <!--        app:layout_constraintStart_toEndOf="@id/avatarRabbit"-->
+    <!--        app:layout_constraintTop_toTopOf="@id/avatarRabbit" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/publishedRabbit"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="10dp"-->
+    <!--        tools:text = "Дата"-->
+    <!--        app:layout_constraintStart_toEndOf="@id/avatarRabbit"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/contentRabbit" />-->
+
+    <!--    <ImageButton-->
+    <!--        android:id="@+id/avatarWoman"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="@dimen/spacing"-->
+    <!--        android:src="@drawable/woman"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/avatarRabbit"-->
+    <!--        android:contentDescription="TODO" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/contentWoman"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        tools:text = "Привет!"-->
+
+    <!--        app:layout_constraintStart_toEndOf="@id/avatarWoman"-->
+    <!--        app:layout_constraintTop_toTopOf="@id/avatarWoman" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/publishedWoman"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="10dp"-->
+    <!--        tools:text = "Дата"-->
+    <!--        app:layout_constraintStart_toEndOf="@id/avatarWoman"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/contentWoman" />-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>
