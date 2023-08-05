@@ -6,5 +6,9 @@ import ru.netology.catsspeak.dto.Post
 interface PostRepository {
     fun getAll():LiveData<List<Post>>
 
-    fun highlight(id:Int)
+    fun highlightById(id:Int)
+
+    fun removeById(id: Int)
+
+    fun save(post: Post)
 }

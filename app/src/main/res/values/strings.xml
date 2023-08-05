@@ -4,4 +4,10 @@
     <string name="post2">Hello, Pig! I\'m eating carrot. Come on!</string>
     <string name="post3">Hello, animals!</string>
     <string name="avatar">Avatar</string>
+    <string name="menu">menu</string>
+    <string name="highlight">HighLight</string>
+    <string name="remove">Remove</string>
+    <string name="edit">Edit</string>
+    <string name="post_text">Post text</string>
+    <string name="edit_message">Edit message</string>
 </resources>
