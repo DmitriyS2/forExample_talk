@@ -10,6 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.netology.catsspeak.*
 import ru.netology.catsspeak.databinding.InfoPostBinding
 import ru.netology.catsspeak.dto.Post
+import ru.netology.catsspeak.repository.blackColor
+import ru.netology.catsspeak.repository.getSmile
+import ru.netology.catsspeak.repository.whiteColor
+import java.util.PrimitiveIterator
 
 interface OnInteractionListener {
     fun remove(post: Post)
@@ -17,14 +21,24 @@ interface OnInteractionListener {
     fun highlight(post: Post)
 }
 
+//interface OnUserListener {
+//    fun choicePig()
+//    fun choiceRabbit()
+//    fun choiceWoman()
+//    fun choiceSmile()
+//}
+
 
 class PostsAdapter(
-    private val onInteractionListener: OnInteractionListener
+    private val onInteractionListener: OnInteractionListener,
+    //private val onUserListener: OnUserListener
 ) : ListAdapter<Post, PostViewHolder>(PostDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = InfoPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PostViewHolder(binding, onInteractionListener)
+        return PostViewHolder(binding, onInteractionListener,
+            //onUserListener
+        )
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
@@ -35,7 +49,8 @@ class PostsAdapter(
 
 class PostViewHolder(
     private val binding: InfoPostBinding,
-    private val onInteractionListener: OnInteractionListener
+    private val onInteractionListener: OnInteractionListener,
+    //private val onUserListener: OnUserListener
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(post: Post) {
         binding.apply {

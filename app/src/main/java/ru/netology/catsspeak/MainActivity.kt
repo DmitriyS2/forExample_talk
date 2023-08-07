@@ -3,30 +3,29 @@ package ru.netology.catsspeak
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.viewModels
 import ru.netology.catsspeak.adapter.OnInteractionListener
 import ru.netology.catsspeak.adapter.PostsAdapter
 import ru.netology.catsspeak.databinding.ActivityMainBinding
 import ru.netology.catsspeak.dto.Post
+import ru.netology.catsspeak.dto.User
+import ru.netology.catsspeak.repository.getPig
+import ru.netology.catsspeak.repository.getRabbit
+import ru.netology.catsspeak.repository.getSmile
+import ru.netology.catsspeak.repository.getUser0
+import ru.netology.catsspeak.repository.getWoman
 import ru.netology.catsspeak.util.AndroidUtils
 import ru.netology.catsspeak.util.focusAndShowKeyboard
 import ru.netology.catsspeak.viewmodel.PostViewModel
 import ru.netology.catsspeak.viewmodel.getEmpty
+import java.util.Collections.copy
 
-const val blackColor:String  = "#000000"
-const val whiteColor:String = "#FFFFFF"
-const val colorPig:String = "#FDE801"
-const val colorRabbit:String = "#FD4801"
-const val colorWoman:String =  "#FF444477"
-const val colorEmotion:String = "#50970C"
-val avatarPig = R.drawable.pig_savings_24
-val avatarRabbit = R.drawable.rabbit_cruelty_free_24
-val avatarWoman = R.drawable.woman
-val avatarEmotion = R.drawable.ic_emoji_emotions_24
-val avatars = listOf<Int>(avatarPig, avatarRabbit, avatarRabbit, avatarEmotion)
 
 class MainActivity : AppCompatActivity() {
+
+    var newUser: User = getUser0()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
@@ -40,6 +39,7 @@ class MainActivity : AppCompatActivity() {
             override fun edit(post: Post) {
                 binding.groupEdit.visibility = View.VISIBLE
                 binding.editText.setText(post.content)
+                newUser = post.user
                 viewModel.edit(post)
             }
             override fun highlight(post: Post) {
@@ -67,6 +67,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.save.setOnClickListener {
             val text = binding.content.text.toString()
+
             if (text.isEmpty()) {
                 Toast.makeText(
                     this,
@@ -76,19 +77,64 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            viewModel.changeContentAndSave(text)
+            if (newUser.name.isEmpty()) {
+                Toast.makeText(
+                    this,
+                    "User must be selected",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
+            viewModel.changeContentAndSave(text, newUser)
+            newUser = getUser0()
 
             binding.content.setText("")
             binding.groupEdit.visibility = View.GONE
             binding.content.clearFocus()
             AndroidUtils.hideKeyboard(it)
         }
+
+
+
         binding.cancelEdit.setOnClickListener {
             binding.content.setText("")
             binding.groupEdit.visibility = View.GONE
             binding.content.clearFocus()
             AndroidUtils.hideKeyboard(it)
             viewModel.edit(getEmpty())
+        }
+
+
+
+        binding.menuUser.setOnClickListener {
+            PopupMenu(it.context, it).apply {
+                inflate(R.menu.menu_users)
+                setOnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.smile -> {
+                            newUser = getSmile()
+                            //onInteractionListener.remove(post)
+                            true
+                        }
+                        R.id.pig -> {
+                            newUser = getPig()
+                            //onInteractionListener.edit(post)
+                            true
+                        }
+                        R.id.rabbit -> {
+                            newUser = getRabbit()
+                            //onInteractionListener.highlight(post)
+                            true
+                        }
+                        R.id.woman -> {
+                            newUser = getWoman()
+                            true
+                        }
+                        else -> false
+                    }
+                }
+            }.show()
         }
     }
 }

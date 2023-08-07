@@ -2,16 +2,14 @@ package ru.netology.catsspeak.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ru.netology.catsspeak.avatarEmotion
-import ru.netology.catsspeak.colorEmotion
+
 import ru.netology.catsspeak.dto.Post
 import ru.netology.catsspeak.dto.User
 import ru.netology.catsspeak.repository.PostRepository
 import ru.netology.catsspeak.repository.PostRepositoryInMemoryImpl
-private val user0 = User("Smile", avatarEmotion, colorEmotion)
-fun getUser0():User {
-    return user0
-}
+import ru.netology.catsspeak.repository.getUser0
+
+
 private val empty = Post(
     id = 0,
     user = getUser0(),
@@ -28,11 +26,11 @@ class PostViewModel : ViewModel() {
 
     val edited = MutableLiveData(empty)
 
-    fun changeContentAndSave(content: String) {
+    fun changeContentAndSave(content: String, newUser: User) {
         edited.value?.let {
             val text = content.trim()
             if (it.content != text) {
-                repository.save(it.copy(content = text))
+                repository.save(it.copy(content = text), newUser)
             }
         }
         edited.value = empty
