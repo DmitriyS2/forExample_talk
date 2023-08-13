@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.activity.result.launch
 import androidx.activity.viewModels
+import ru.netology.catsspeak.activity.NewPostResultContract
 import ru.netology.catsspeak.adapter.OnInteractionListener
 import ru.netology.catsspeak.adapter.PostsAdapter
 import ru.netology.catsspeak.databinding.ActivityMainBinding
@@ -32,15 +34,23 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val viewModel: PostViewModel by viewModels()
+
+        val newPostLauncher = registerForActivityResult(NewPostResultContract()) { result ->
+            result ?: return@registerForActivityResult
+            viewModel.changeContentAndSave(result, newUser)
+            //Log.d("MyLog", "из MainActivity $result")
+        }
+
         val adapter = PostsAdapter(object:OnInteractionListener {
             override fun remove(post: Post) {
                 viewModel.remove(post.id)
             }
             override fun edit(post: Post) {
-                binding.groupEdit.visibility = View.VISIBLE
-                binding.editText.setText(post.content)
+//                binding.groupEdit.visibility = View.VISIBLE
+//                binding.editText.setText(post.content)
                 newUser = post.user
                 viewModel.edit(post)
+                newPostLauncher.launch(post.content)
             }
             override fun highlight(post: Post) {
                 viewModel.highlight(post.id)
@@ -60,75 +70,75 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.edited.observe(this) {
             if (it.id != 0) {
-                binding.content.setText(it.content)
-                binding.content.focusAndShowKeyboard()
+//                binding.content.setText(it.content)
+//                binding.content.focusAndShowKeyboard()
             }
         }
 
-        binding.save.setOnClickListener {
-            val text = binding.content.text.toString()
-
-            if (text.isEmpty()) {
-                Toast.makeText(
-                    this,
-                    "Content can't be empty",
-                    Toast.LENGTH_SHORT
-                ).show()
-                return@setOnClickListener
-            }
-
-            if (newUser.name.isEmpty()) {
-                Toast.makeText(
-                    this,
-                    "User must be selected",
-                    Toast.LENGTH_SHORT
-                ).show()
-                return@setOnClickListener
-            }
-
-            viewModel.changeContentAndSave(text, newUser)
-            newUser = getUser0()
-
-            binding.content.setText("")
-            binding.groupEdit.visibility = View.GONE
-            binding.content.clearFocus()
-            AndroidUtils.hideKeyboard(it)
-        }
-
-
-
-        binding.cancelEdit.setOnClickListener {
-            binding.content.setText("")
-            binding.groupEdit.visibility = View.GONE
-            binding.content.clearFocus()
-            AndroidUtils.hideKeyboard(it)
-            viewModel.edit(getEmpty())
-        }
+//        binding.save.setOnClickListener {
+//            val text = binding.content.text.toString()
+//
+//            if (text.isEmpty()) {
+//                Toast.makeText(
+//                    this,
+//                    "Content can't be empty",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//                return@setOnClickListener
+//            }
+//
+//            if (newUser.name.isEmpty()) {
+//                Toast.makeText(
+//                    this,
+//                    "User must be selected",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//                return@setOnClickListener
+//            }
+//
+//            viewModel.changeContentAndSave(text, newUser)
+//            newUser = getUser0()
+//
+//            binding.content.setText("")
+//            binding.groupEdit.visibility = View.GONE
+//            binding.content.clearFocus()
+//            AndroidUtils.hideKeyboard(it)
+//        }
 
 
 
-        binding.menuUser.setOnClickListener {
+//        binding.cancelEdit.setOnClickListener {
+//            binding.content.setText("")
+//            binding.groupEdit.visibility = View.GONE
+//            binding.content.clearFocus()
+//            AndroidUtils.hideKeyboard(it)
+//            viewModel.edit(getEmpty())
+//        }
+
+
+        binding.fab.setOnClickListener {
             PopupMenu(it.context, it).apply {
                 inflate(R.menu.menu_users)
                 setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.smile -> {
                             newUser = getSmile()
-                            //onInteractionListener.remove(post)
+                            newPostLauncher.launch("")
                             true
                         }
                         R.id.pig -> {
                             newUser = getPig()
-                            //onInteractionListener.edit(post)
+                            newPostLauncher.launch("")
                             true
                         }
                         R.id.rabbit -> {
                             newUser = getRabbit()
-                            //onInteractionListener.highlight(post)
+                            newPostLauncher.launch("")
                             true
                         }
                         R.id.woman -> {
                             newUser = getWoman()
+                            newPostLauncher.launch("")
                             true
                         }
                         else -> false
@@ -136,5 +146,34 @@ class MainActivity : AppCompatActivity() {
                 }
             }.show()
         }
+    //        binding.menuUser.setOnClickListener {
+//            PopupMenu(it.context, it).apply {
+//                inflate(R.menu.menu_users)
+//                setOnMenuItemClickListener { item ->
+//                    when (item.itemId) {
+//                        R.id.smile -> {
+//                            newUser = getSmile()
+//                            //onInteractionListener.remove(post)
+//                            true
+//                        }
+//                        R.id.pig -> {
+//                            newUser = getPig()
+//                            //onInteractionListener.edit(post)
+//                            true
+//                        }
+//                        R.id.rabbit -> {
+//                            newUser = getRabbit()
+//                            //onInteractionListener.highlight(post)
+//                            true
+//                        }
+//                        R.id.woman -> {
+//                            newUser = getWoman()
+//                            true
+//                        }
+//                        else -> false
+//                    }
+//                }
+//            }.show()
+//        }
     }
 }

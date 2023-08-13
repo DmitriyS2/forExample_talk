@@ -3,4 +3,5 @@
     <dimen name="spacing">50dp</dimen>
     <dimen name="spacing_8dp">8dp</dimen>
     <dimen name="spacing_5dp">5dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

@@ -10,4 +10,6 @@
     <string name="edit">Edit</string>
     <string name="post_text">Post text</string>
     <string name="edit_message">Edit message</string>
+    <string name="add_post">Add post</string>
+    <string name="description_post_save">post save</string>
 </resources>
